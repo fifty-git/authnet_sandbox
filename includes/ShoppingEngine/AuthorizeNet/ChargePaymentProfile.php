@@ -19,6 +19,7 @@ class ChargePaymentProfile
 	private $controller = null;
 	private $response = null;
 	private $tresponse = null;
+	private $returnArray = array();
 
 	public function chargePaymentProfile($profileid, $paymentprofileid, $amount)
 	{
@@ -50,22 +51,24 @@ class ChargePaymentProfile
 			$this->tresponse = $this->response->getTransactionResponse();
 			if (($this->tresponse != null) && ($this->tresponse->getResponseCode() == 1) )   
 			{
-				$returnArray['error'] = false;
-				$returnArray['auth_code'] = $this->tresponse->getAuthCode();
-				$returnArray['trans_id'] = $this->tresponse->getTransId();
+				$this->returnArray['error'] = false;
+				$this->returnArray['auth_code'] = $this->tresponse->getAuthCode();
+				$this->returnArray['trans_id'] = $this->tresponse->getTransId();
 			}
-			elseif (($this->tresponse != null) && ($this->tresponse->getResponseCode()=="2") )
+			elseif ($this->tresponse != null)
 			{
-				$returnArray['error'] = true;
-				$returnArray['error_code'] = $this->tresponse->getResponseCode();
+					$this->errors = $this->tresponse->getErrors(); // returns an array that holds an object
+					$this->returnArray['error'] = true;
+					$this->returnArray['error_code'] = $this->errors[0]->getErrorCode();
+					$this->returnArray['error_message'] = $this->errors[0]->getErrorText();
 			}
 		}
 		else
 		{
-				$returnArray['error'] = true;
-				$returnArray['error_code'] = false;
+				$this->returnArray['error'] = true;
+				$this->returnArray['error_code'] = false;
 		}
-		return $returnArray;
+		return $this->returnArray;
 
 
 	}

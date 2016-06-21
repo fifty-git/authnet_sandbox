@@ -32,7 +32,7 @@ if ($_POST['post_token']) {
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>CIM Get List of Payment Profiles</title>
+	<title>CIM Delete a Payment Profile</title>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <style>
 .container { max-width: 950px; }
@@ -43,12 +43,12 @@ if ($_POST['post_token']) {
 
 <div class="row">
 <div class="col-md-6">
-<h4>CIM Get List of Payment Profiles</h4>
+<h4>CIM Delete a Payment Profile</h4>
 <form action="delete_customer_payment_profile.php" method="POST">
-<input type="hidden" name="merchantCustomerId" value="1200255698">
-<input type="hidden" name="paymentProfileId" value="1200255831">
+<input type="hidden" name="merchantCustomerId" value="1200356561">
+<input type="hidden" name="paymentProfileId" value="1200253244">
 <input type="hidden" name="post_token" value="<?= $token ?>">
-<p>Delete Eric Claptons payment profile</p>
+<p>Delete a payment profile</p>
    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div><!-- /col 6 -->

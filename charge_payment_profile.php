@@ -15,24 +15,16 @@ if ($_POST['post_token']) {
 
   $returnArray = $authorizeNetCore->chargePaymentProfile($profileid, $paymentprofileid, $amount);
 
-  if (!$returnArray['error']) {
+  // check to see if card for profile was charged
+  if ($returnArray['error'] == false) {
     $authCode = $returnArray['auth_code'];
     $transId = $returnArray['trans_id'];
-    $returnMessage = 'Successful Transaction!'; 
+    $transactionReturnMessage = ' Successful Transaction!';
   }
   else {
-    $authCode = 'error';
-    $transId = 'error';
-    $errorCode = $returnArray['error_code'];
-    if($errorCode == 2) {
-      $returnMessage = "ERROR: Code $errorCode - There was an error in the transaction"; 
-    }
-    elseif($errorCode == 4) {
-      $returnMessage = "ERROR: Code $errorCode - transaction held for review"; 
-    }
-    elseif($errorCode == false) {
-      $returnMessage = "ERROR: error in running transaction"; 
-    }
+    $transErrorCode = $returnArray['error_code'];
+    $transErrorText = $returnArray['error_message'];
+    $transactionReturnMessage = " TRANS ERROR: Code $transErrorCode - $transErrorText"; 
   }
 
 }
@@ -69,7 +61,7 @@ if ($_POST['post_token']) {
 <div class="col-md-6 response">
 <h4>Return Output</h4>
 <p>Auth Code: <?= $authCode ?> Trans ID: <?= $transId ?></p>
-<p><?= $returnMessage ?></p>
+<p><?= $transactionReturnMessage ?></p>
 </div><!-- /col 6 -->
 </div><!-- /row -->
 </div><!-- /container -->
